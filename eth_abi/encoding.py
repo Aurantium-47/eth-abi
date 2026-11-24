@@ -651,8 +651,7 @@ class PackedArrayEncoder(BaseArrayEncoder):
             isinstance(item_encoder, FixedSizeEncoder)
             and item_encoder.data_byte_size < 32
         ):
-            # Array elements occupy a word, unlike standalone packed scalars.
-            # The registry caches encoders: do not widen the shared instance.
+            # Copy, since the registry caches this encoder for standalone scalars too.
             item_encoder = copy.copy(item_encoder)
             item_encoder.data_byte_size = 32
 
